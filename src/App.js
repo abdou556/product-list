@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
+import AddItem from './Components/AddItem';
+import Item from './Components/Item';
+import TotalPrice from './Components/TotalPrice';
+
 function App() {
+  const [items, setItems] = useState([]);
+
+  const handleAddItem = (item) => {
+    setItems([...items, item]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Product List</h1>
+      <AddItem onAddItem={handleAddItem} />
+      <div className="items-list">
+        {items.map((item, index) => (
+          <Item key={index} name={item.name} price={item.price} />
+        ))}
+      </div>
+      <TotalPrice items={items} />
     </div>
   );
 }
